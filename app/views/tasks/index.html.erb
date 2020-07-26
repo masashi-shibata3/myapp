@@ -1,0 +1,72 @@
+<% if logged_in? %>
+
+<h5> 
+<%= current_user.name %>さんのスケジュール
+</h5>
+<h1>タスク一覧 (<%= @count_tasks %>)</h1>
+
+
+<%if @tasks.any? %>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ステータス（完/末）</th>
+            <th>タスク</th>
+            <th>優先順位</th>
+            <th>要/不要</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+<% @tasks.each do|task|%>
+
+    <tr>
+<td>
+    <%=link_to task.id, task %> 
+
+</td>
+<td>
+    <input type="checkbox" name="ck01" value="1" autofocus>
+
+</td>    
+<td>
+    <%=task.content%>
+</td>
+
+<td>
+    <%=task.deadline%>
+</td>
+<td>
+    <%=link_to'削除', task_path(task.id), method: :delete, data: {confirm: '削除してもいいですか？'}%>
+</td>
+    </tr>
+  
+
+<% end %>
+
+    
+    </tbody>
+</table>
+
+    <div>
+<%= paginate @tasks%>    
+    </div>
+    
+<%end%>
+
+
+<%=link_to'新規タスクの投稿', new_task_path,class: "btn btn-primary" %>
+
+<% else %>
+
+    <div class="text-center">
+      <h1>To Do</h1>
+      
+    </div>
+<% end %>
+
+
+
+
